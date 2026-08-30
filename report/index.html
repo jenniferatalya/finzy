@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Buat Laporan — Finzy</title>
+    <link rel="icon" type="image/png" href="/static/images/head-smile.png">
 
     <!-- BOOTSTRAP -->
-    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
     <!-- BOOTSTRAP -->
 
     <!-- SWEETALERT2 -->
-    <link rel="stylesheet" href="static/sweetalert2/sweetalert2.css" />
-    <script src="static/sweetalert2/sweetalert2.js"></script>
+    <link rel="stylesheet" href="/static/sweetalert2/sweetalert2.css" />
+    <script src="/static/sweetalert2/sweetalert2.js"></script>
     <!-- SWEETALERT2 -->
 
     <!-- Fonts (same as landing) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="static/css/styles.css" />
-    <link rel="stylesheet" href="static/css/report.css" />
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <link rel="stylesheet" href="/static/css/report.css" />
 </head>
 <body>
     <div class="page-wrapper report-page">
@@ -34,8 +35,8 @@
         <div class="shape shape-navy-dot-desktop d-none d-lg-block"></div>
 
         <!-- ===== Logo (top-left) ===== -->
-        <a href="index.html" class="brand-header">
-            <img src="static/images/head.png" alt="Finzy" class="brand-logo">
+        <a href="/" class="brand-header">
+            <img src="/static/images/head.png" alt="Finzy" class="brand-logo">
             <span class="brand-name">Finzy</span>
         </a>
 
@@ -47,7 +48,7 @@
 
         <!-- ===== Wizard ===== -->
         <main class="wizard-main">
-            <img src="static/images/body-tilt.png" alt="" class="wizard-side-fox">
+            <img src="/static/images/body-tilt.png" alt="" class="wizard-side-fox">
             <div class="wizard-card">
 
                 <!-- Step indicator + reset -->
@@ -102,7 +103,7 @@
                     <div class="wizard-actions wizard-actions-end">
                         <button type="button" class="btn-next" data-goto="2">
                             <span data-translate="btn_next">Next</span>
-                            <img src="static/images/head-side.png" alt="" class="btn-icon">
+                            <img src="/static/images/head-side.png" alt="" class="btn-icon">
                         </button>
                     </div>
                 </section>
@@ -176,12 +177,12 @@
 
                     <div class="wizard-actions">
                         <button type="button" class="btn-back" data-goto="1">
-                            <img src="static/images/head-side.png" alt="" class="btn-icon btn-icon-flip">
+                            <img src="/static/images/head-side.png" alt="" class="btn-icon btn-icon-flip">
                             <span data-translate="btn_back">Back</span>
                         </button>
                         <button type="button" class="btn-next" data-goto="3">
                             <span data-translate="btn_next">Next</span>
-                            <img src="static/images/head-side.png" alt="" class="btn-icon">
+                            <img src="/static/images/head-side.png" alt="" class="btn-icon">
                         </button>
                     </div>
                 </section>
@@ -189,7 +190,7 @@
                 <!-- ============ STEP 3 — Ringkasan ============ -->
                 <section class="wizard-step" data-step="3">
                     <div class="summary-header">
-                        <img src="static/images/head-smile.png" alt="" class="summary-fox">
+                        <img src="/static/images/head-smile.png" alt="" class="summary-fox">
                         <div>
                             <h2 class="step-title" data-translate="step3_title">Ringkasan laporan</h2>
                             <p class="step-subtitle" data-translate="step3_subtitle">Cek lagi datanya sebelum laporan dibuat.</p>
@@ -225,7 +226,7 @@
 
                     <div class="wizard-actions">
                         <button type="button" class="btn-back" data-goto="2">
-                            <img src="static/images/head-side.png" alt="" class="btn-icon btn-icon-flip">
+                            <img src="/static/images/head-side.png" alt="" class="btn-icon btn-icon-flip">
                             <span data-translate="btn_back">Back</span>
                         </button>
                         <button type="button" class="btn-generate" id="generatePdfBtn">
@@ -242,8 +243,8 @@
     <!-- jsPDF (client-side PDF generation, no backend needed) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-    <script src="static/bootstrap/js/bootstrap.min.js"></script>
-    <script src="static/js/translate.js"></script>
-    <script src="static/js/report.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/js/translate.js"></script>
+    <script src="/static/js/report.js"></script>
 </body>
 </html>

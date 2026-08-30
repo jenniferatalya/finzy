@@ -563,11 +563,11 @@
         title: T("success_title"),
         confirmButtonColor: "#1C1B3B",
       }).then(() => {
-        window.location.href = "index.html";
+        window.location.href = "/";
       });
     } else {
       alert(T("success_title"));
-      window.location.href = "index.html";
+      window.location.href = "/";
     }
   }
 
