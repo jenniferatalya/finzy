@@ -1,0 +1,397 @@
+/* =========================================================
+   Finzy — Hero section styles
+   ========================================================= */
+
+:root {
+  --cream:      #FBF5EC;
+  --navy:       #1C1B3B;
+  --orange:     #E8823C;
+  --orange-soft:#EFA26B;
+  --lavender:   #C9C4EC;
+  --text-muted: #6B6A7E;
+
+  --font-display: "Baloo 2", "Poppins", sans-serif;
+  --font-body:    "Nunito", "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: var(--font-body);
+  background: var(--cream);
+  overflow-x: hidden;
+}
+
+.page-wrapper {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+/* =========================================================
+   Brand / Logo — top left
+   ========================================================= */
+
+.brand-header {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 20;
+  text-decoration: none;
+}
+
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #fff;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(28, 27, 59, 0.15);
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--navy);
+}
+
+/* =========================================================
+   Language switcher — top-right pill (ID / EN)
+   Shared between the landing page and the report wizard.
+   ========================================================= */
+
+.lang-switch {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 20;
+  display: flex;
+  background: #fff;
+  border-radius: 999px;
+  padding: 3px;
+  box-shadow: 0 2px 8px rgba(28, 27, 59, 0.12);
+}
+
+.lang-switch button {
+  border: none;
+  background: transparent;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.lang-switch button.is-active {
+  background: var(--navy);
+  color: #fff;
+}
+
+@media (min-width: 992px) {
+  .lang-switch {
+    top: 24px;
+    right: 28px;
+  }
+}
+
+/* =========================================================
+   Decorative shapes (mobile defaults)
+   ========================================================= */
+
+.shape {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* orange blob, top-left */
+.shape-orange-blob {
+  top: -60px;
+  left: -70px;
+  width: 220px;
+  height: 220px;
+  background: var(--orange);
+  border-radius: 45% 55% 60% 40% / 50% 45% 55% 50%;
+}
+
+/* small navy dot, top-center-right */
+.shape-navy-dot {
+  top: 30px;
+  right: 90px;
+  width: 56px;
+  height: 56px;
+  background: var(--navy);
+  border-radius: 50%;
+}
+
+/* lavender blob, top-right */
+.shape-lavender-blob {
+  top: -10px;
+  right: -60px;
+  width: 150px;
+  height: 150px;
+  background: var(--lavender);
+  border-radius: 40% 60% 55% 45% / 55% 40% 60% 45%;
+}
+
+/* =========================================================
+   Hero layout
+   ========================================================= */
+
+.hero-container {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  padding: 110px 28px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.text-content {
+  position: relative;
+  z-index: 15;
+  text-align: center;
+  bottom: 12vh;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 2.4rem;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+
+.hero-subtitle {
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.btn-signup,
+.btn-login {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  padding: 14px 20px;
+  border-radius: 16px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-signup {
+  background: var(--navy);
+  color: #fff;
+  border: 2px solid var(--navy);
+}
+.btn-signup:hover {
+  background: #12112a;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.btn-login {
+  background: transparent;
+  color: var(--orange);
+  border: 2px solid var(--orange);
+}
+.btn-login:hover {
+  background: var(--orange);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   Fox image
+   requirement: on mobile the fox "peeks" from the bottom edge,
+   cropped by the page wrapper instead of sitting fully in view
+   ========================================================= */
+
+.fox-wrap {
+  position: absolute;
+  left: 50%;
+  bottom: 2.8vh;
+  z-index: 5;
+  width: 82%;
+  max-width: 320px;
+  transform: translate(-50%, 28%);
+  pointer-events: none;
+}
+
+.fox-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.fox-mobile {
+  display: block;
+}
+
+.fox-desktop {
+  display: none;
+}
+
+/* =========================================================
+   Desktop / large screens
+   requirement 1: image shifts toward the right on desktop
+   requirement 2: swap to body / body-tilt image + extra shapes
+   requirement 3: fox should fill vertical space so the right
+   side doesn't look empty (anchor to bottom, size by vh, not
+   pushed off with huge negative margins)
+   ========================================================= */
+
+@media (min-width: 992px) {
+
+  .hero-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 0 4vw;
+    min-height: 100vh;
+  }
+
+  .text-content {
+    text-align: left;
+    flex: 0 0 auto;
+    max-width: 480px;
+    z-index: 15;
+    bottom: -5vh;
+    margin-left: 10vw;
+  }
+
+  .hero-title {
+    font-size: 3.2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    max-width: 460px;
+  }
+
+  .hero-buttons {
+    flex-direction: row;
+    margin: 0;
+    max-width: none;
+  }
+
+  .btn-signup,
+  .btn-login {
+    flex: 0 0 auto;
+    padding: 15px 34px;
+  }
+
+  /* fox "peeks" in from the bottom-right corner: pulled out of
+     the flex flow entirely and pinned to the corner of the hero,
+     bleeding off both edges, with a gentle rotation for a
+     dynamic, leaning-in feel. Text keeps its own space on the left. */
+  .fox-wrap {
+    position: absolute;
+    left: auto;
+    top: auto;
+    right: -3vw;
+    bottom: -6vh;
+    transform: none;
+    width: 40vw;
+    max-width: 640px;
+    min-width: 340px;
+    z-index: 6;
+    pointer-events: none;
+  }
+
+  .fox-mobile   { display: none; }
+  .fox-desktop  {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: scaleX(-1) rotate(10deg);  /* faces the text, tilted lean-in */
+    transform-origin: bottom center;
+    filter: drop-shadow(0 30px 40px rgba(28, 27, 59, 0.18));
+  }
+
+  /* extra abstract shapes only shown on desktop */
+  .shape-orange-blob {
+    top: -140px;
+    left: -140px;
+    width: 380px;
+    height: 380px;
+  }
+
+  .shape-lavender-blob {
+    top: -80px;
+    right: -100px;
+    width: 260px;
+    height: 260px;
+  }
+
+  .shape-navy-dot {
+    top: 60px;
+    right: 42%;
+    width: 70px;
+    height: 70px;
+  }
+
+  .shape-lavender-blob-desktop {
+    bottom: -120px;
+    left: 38%;
+    width: 240px;
+    height: 240px;
+    background: var(--lavender);
+    opacity: 0.55;
+    border-radius: 50% 50% 45% 55% / 45% 55% 45% 55%;
+  }
+
+  .shape-orange-ring-desktop {
+    top: 12%;
+    right: 4%;
+    width: 130px;
+    height: 130px;
+    border: 14px solid var(--orange-soft);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+
+  .shape-navy-dot-desktop {
+    bottom: 8%;
+    right: 8%;
+    width: 30px;
+    height: 30px;
+    background: var(--navy);
+    border-radius: 50%;
+    opacity: 0.7;
+  }
+}
+
+/* =========================================================
+   Small phones — tighten spacing
+   ========================================================= */
+
+@media (max-width: 380px) {
+  .hero-title { font-size: 2rem; }
+  .hero-container { padding-top: 100px; }
+}

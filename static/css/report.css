@@ -1,0 +1,860 @@
+/* =========================================================
+   Finzy — Report Wizard styles
+   (relies on tokens + .page-wrapper/.shape/.brand-header
+   already defined in styles.css)
+   ========================================================= */
+
+/* Page never scrolls at the document level — only the wizard
+   card scrolls internally, and only once its content actually
+   overflows (e.g. many transactions added). On first load with
+   no data, step 1 & step 2 fit the viewport and stay still. */
+.report-page {
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.wizard-main {
+  position: relative;
+  z-index: 10;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px 28px;
+  overflow: hidden;
+}
+
+/* Mobile: drop the boxed "card" look entirely — no shadow, no
+   rounded corners, no side padding on the wrapper — so the
+   wizard uses the full screen width. More width for the
+   transaction table means it needs horizontal scrolling far
+   less often. */
+@media (max-width: 575.98px) {
+  .wizard-main {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .wizard-card {
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 22px 14px 20px;
+  }
+}
+
+.wizard-card {
+  position: relative;
+  z-index: 15;
+  width: 100%;
+  max-width: 860px;
+  max-height: 100%;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 28px;
+  padding: 32px 24px 28px;
+  box-shadow: 0 24px 60px rgba(28, 27, 59, 0.12);
+}
+
+/* =========================================================
+   Header bar — step indicator + reset button
+   ========================================================= */
+
+.wizard-header-bar {
+  position: relative;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (min-width: 576px) {
+  .wizard-header-bar {
+    display: block;
+  }
+}
+
+.step-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.step-dot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.step-dot:hover {
+  opacity: 0.75;
+}
+
+.step-dot.is-active,
+.step-dot.is-done {
+  opacity: 1;
+}
+
+.btn-reset {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 8px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+@media (min-width: 576px) {
+  .btn-reset {
+    position: absolute;
+    top: 2px;
+    right: 0;
+  }
+}
+
+.btn-reset:hover {
+  color: #d84545;
+  background: rgba(216, 69, 69, 0.08);
+}
+
+.step-dot-num {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cream);
+  color: var(--navy);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 2px solid var(--lavender);
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.step-dot.is-active .step-dot-num {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+
+.step-dot.is-done .step-dot-num {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+}
+
+.step-dot-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  display: none;
+}
+
+.step-line {
+  width: 32px;
+  height: 2px;
+  background: var(--lavender);
+  margin-bottom: 20px;
+}
+
+/* =========================================================
+   Steps
+   ========================================================= */
+
+.wizard-step {
+  display: none;
+  animation: stepIn 0.25s ease;
+}
+
+.wizard-step.is-active {
+  display: block;
+}
+
+@keyframes stepIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.step-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 1.5rem;
+  margin: 0 0 4px;
+}
+
+.step-subtitle {
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  margin: 0 0 22px;
+}
+
+/* =========================================================
+   Form fields
+   ========================================================= */
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+
+.form-control {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 2px solid #ECE7DD;
+  background: var(--cream);
+  color: var(--navy);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(232, 130, 60, 0.15);
+  background: #fff;
+}
+
+/* Currency inputs (Saldo Awal, Jumlah transaksi) — shown with a
+   fixed "Rp" prefix; the field itself is auto-formatted with
+   thousands separators via JS (see report.js) */
+.currency-field {
+  position: relative;
+}
+
+.currency-prefix {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.currency-input {
+  padding-left: 42px !important;
+  text-align: left;
+}
+
+.transaction-form {
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.form-row-split {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.form-row-split .form-group {
+  width: 100%;
+}
+
+/* =========================================================
+   Buttons
+   Bootstrap 5 buttons drive their hover/active colors through
+   CSS custom properties (--bs-btn-hover-color etc). If we only
+   override `color`/`background` on our own classes, Bootstrap's
+   own hover rule can still win and swap the text back to a dark
+   color on a dark background — unreadable. Setting the actual
+   Bootstrap variables makes our hover state authoritative.
+   ========================================================= */
+
+.wizard-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.wizard-actions-end {
+  justify-content: flex-end;
+}
+
+/* When there are two buttons in a row (Back + Next / Back +
+   Generate), give them equal width instead of letting the
+   longer label's button balloon past the shorter one. */
+.wizard-actions:not(.wizard-actions-end) .btn-back,
+.wizard-actions:not(.wizard-actions-end) .btn-next,
+.wizard-actions:not(.wizard-actions-end) .btn-generate {
+  flex: 1 1 0;
+  justify-content: center;
+  margin-left: 0;
+  white-space: nowrap;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.btn-next,
+.btn-back,
+.btn-generate,
+.btn-add-tx {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 14px;
+  padding: 12px 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+
+.btn-next,
+.btn-generate {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--navy);
+  --bs-btn-border-color: var(--navy);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #12112a;
+  --bs-btn-hover-border-color: #12112a;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #12112a;
+  --bs-btn-active-border-color: #12112a;
+  --bs-btn-focus-shadow-rgb: 28, 27, 59;
+
+  color: var(--bs-btn-color);
+  background: var(--bs-btn-bg);
+  border: 2px solid var(--bs-btn-border-color);
+  margin-left: auto;
+}
+.btn-next:hover,
+.btn-generate:hover,
+.btn-next:focus,
+.btn-generate:focus {
+  color: var(--bs-btn-hover-color);
+  background: var(--bs-btn-hover-bg);
+  border-color: var(--bs-btn-hover-border-color);
+  transform: translateY(-2px);
+}
+
+.btn-back {
+  --bs-btn-color: var(--orange);
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: var(--orange);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--orange);
+  --bs-btn-hover-border-color: var(--orange);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--orange);
+  --bs-btn-active-border-color: var(--orange);
+
+  color: var(--bs-btn-color);
+  background: var(--bs-btn-bg);
+  border: 2px solid var(--bs-btn-border-color);
+}
+.btn-back:hover,
+.btn-back:focus {
+  color: var(--bs-btn-hover-color);
+  background: var(--bs-btn-hover-bg);
+  border-color: var(--bs-btn-hover-border-color);
+  transform: translateY(-2px);
+}
+
+.btn-add-tx {
+  --bs-btn-color: var(--orange);
+  --bs-btn-bg: #fff;
+  --bs-btn-border-color: var(--orange);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--orange);
+  --bs-btn-hover-border-color: var(--orange);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--orange);
+  --bs-btn-active-border-color: var(--orange);
+
+  color: var(--bs-btn-color);
+  background: var(--bs-btn-bg);
+  border: 2px solid var(--bs-btn-border-color);
+  width: 100%;
+  justify-content: center;
+  margin-top: 4px;
+}
+.btn-add-tx:hover,
+.btn-add-tx:focus {
+  color: var(--bs-btn-hover-color);
+  background: var(--bs-btn-hover-bg);
+  border-color: var(--bs-btn-hover-border-color);
+}
+
+.btn-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #fff;
+  padding: 2px;
+}
+
+.btn-icon-flip {
+  transform: scaleX(-1);
+}
+
+/* =========================================================
+   Transaction table
+   Plain white rows (no striping) — per request
+   ========================================================= */
+
+.transaction-list-wrap {
+  margin-top: 4px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+}
+
+.transaction-table {
+  width: 100%;
+  min-width: 480px; /* below this, the wrapper scrolls horizontally instead of squeezing columns */
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  background: #fff;
+}
+
+@media (max-width: 575.98px) {
+  .transaction-table {
+    min-width: 420px; /* full-bleed layout already frees up width, so less is needed here */
+    font-size: 0.78rem;
+  }
+  .transaction-table thead th {
+    padding: 6px 5px;
+  }
+  .transaction-table tbody td {
+    padding: 8px 5px;
+  }
+  .transaction-table th:first-child,
+  .transaction-table td:first-child {
+    padding-right: 10px;
+  }
+}
+
+.transaction-table th:first-child,
+.transaction-table td:first-child {
+  white-space: nowrap; /* dates never wrap; column width follows their content */
+  padding-right: 18px; /* guaranteed breathing room before Description */
+}
+
+.transaction-table thead th {
+  text-align: left;
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 8px 8px;
+  border-bottom: 2px solid var(--cream);
+  background: #fff;
+}
+
+.transaction-table tbody tr {
+  background: #fff;
+}
+
+.transaction-table tbody td {
+  padding: 10px 8px;
+  color: var(--navy);
+  border-bottom: 1px solid var(--cream);
+  vertical-align: middle;
+  background: #fff;
+}
+
+.transaction-table .text-end {
+  text-align: right;
+}
+
+.transaction-table .row-saldo-awal td {
+  font-weight: 700;
+  background: var(--cream);
+}
+
+/* =========================================================
+   Mobile transaction cards
+   Below 576px we swap the table for a card list entirely —
+   no horizontal scrolling, no cramped 2-line badges, and the
+   delete button is always visible (top-right of each card)
+   instead of hidden off the edge of a scrollable table.
+   ========================================================= */
+
+.tx-card-list {
+  display: none;
+}
+
+@media (max-width: 575.98px) {
+  .transaction-table-desktop {
+    display: none;
+  }
+  .transaction-list-wrap {
+    overflow-x: visible;
+  }
+  .tx-card-list {
+    display: block;
+  }
+}
+
+.tx-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid #ECE7DD;
+  border-radius: 14px;
+  padding: 14px 54px 14px 14px;
+  margin-bottom: 10px;
+}
+
+.tx-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.tx-card-date {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.tx-card-keterangan {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--navy);
+  margin-bottom: 8px;
+  word-break: break-word;
+}
+
+.tx-card-amount {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--navy);
+}
+
+.tx-card-bottom {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tx-card-saldo {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.tx-card-delete {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: var(--cream);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.tx-card-delete i {
+  font-size: 0.82rem;
+  line-height: 1;
+  display: block;
+}
+
+.tx-card-delete:hover,
+.tx-card-delete:active {
+  color: #fff;
+  background: #d84545;
+}
+
+.tx-card-saldo-awal {
+  background: var(--cream);
+  border-color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px;
+}
+
+.tx-card-saldo-awal .tx-card-keterangan {
+  margin-bottom: 0;
+}
+
+.tx-card-saldo-awal .tx-card-amount {
+  font-size: 1.1rem;
+}
+
+.tx-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.tx-badge-masuk {
+  background: rgba(76, 175, 118, 0.15);
+  color: #2E8B57;
+}
+
+.tx-badge-keluar {
+  background: rgba(232, 130, 60, 0.15);
+  color: var(--orange);
+}
+
+.tx-delete-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 4px 6px;
+}
+.tx-delete-btn:hover {
+  color: #d84545;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  padding: 18px 10px;
+  margin: 0;
+}
+
+/* =========================================================
+   Summary step
+   ========================================================= */
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.summary-fox {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.summary-info,
+.summary-totals {
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--navy);
+  padding: 6px 0;
+}
+
+.summary-row span {
+  color: var(--text-muted);
+}
+
+.summary-final {
+  border-top: 1px dashed #D9D2C4;
+  margin-top: 6px;
+  padding-top: 12px;
+  font-size: 1rem;
+}
+.summary-final strong {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+}
+
+.text-in { color: #2E8B57; }
+.text-out { color: var(--orange); }
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (min-width: 576px) {
+  .step-dot-label { display: inline-block; }
+}
+
+@media (min-width: 992px) {
+  .wizard-card {
+    padding: 44px 44px 36px;
+  }
+  .step-title { font-size: 1.8rem; }
+}
+
+/* Small-height screens: relax the "no page scroll" rule so
+   content is never clipped unreachable on short viewports */
+@media (max-height: 620px) {
+  .report-page,
+  .wizard-main {
+    height: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+  .wizard-card {
+    max-height: none;
+  }
+}
+
+/* =========================================================
+   Decorative side mascot — fills the empty gutter beside the
+   card on wide desktop screens. Hidden below xl since the
+   gutter gets too narrow and it would overlap the card.
+   ========================================================= */
+
+.wizard-side-fox {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 2.5vw;
+  width: 15vw;
+  max-width: 220px;
+  transform: translateY(-50%) rotate(-8deg);
+  z-index: 8;
+  pointer-events: none;
+  filter: drop-shadow(0 20px 30px rgba(28, 27, 59, 0.15));
+}
+
+@media (min-width: 1600px) {
+  .wizard-side-fox {
+    display: block;
+  }
+}
+
+/* =========================================================
+   Custom "Jenis" dropdown
+   Replaces a native <select> so it (a) always opens right
+   below the trigger instead of as a full-screen native picker
+   on mobile, and (b) visibly reads as an editable control via
+   the chevron + hover/focus/open states.
+   ========================================================= */
+
+.custom-select {
+  position: relative;
+}
+
+.custom-select-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  text-align: left;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 2px solid #ECE7DD;
+  background: var(--cream);
+  color: var(--navy);
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.custom-select-trigger:hover {
+  border-color: var(--orange-soft);
+  background: #fff;
+}
+
+.custom-select.is-open .custom-select-trigger,
+.custom-select-trigger:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(232, 130, 60, 0.15);
+  background: #fff;
+}
+
+.custom-select-chevron {
+  font-size: 0.78rem;
+  color: var(--orange);
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.custom-select.is-open .custom-select-chevron {
+  transform: rotate(180deg);
+}
+
+.custom-select-options {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #ECE7DD;
+  box-shadow: 0 12px 28px rgba(28, 27, 59, 0.15);
+  z-index: 30;
+  overflow: hidden;
+}
+
+.custom-select-option {
+  padding: 12px 14px;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--navy);
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.custom-select-option:hover {
+  background: var(--cream);
+}
+
+.custom-select-option.is-selected {
+  font-weight: 700;
+  color: var(--orange);
+  background: rgba(232, 130, 60, 0.08);
+}

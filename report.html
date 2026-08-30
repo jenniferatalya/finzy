@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buat Laporan — Finzy</title>
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- BOOTSTRAP -->
+
+    <!-- SWEETALERT2 -->
+    <link rel="stylesheet" href="static/sweetalert2/sweetalert2.css" />
+    <script src="static/sweetalert2/sweetalert2.js"></script>
+    <!-- SWEETALERT2 -->
+
+    <!-- Fonts (same as landing) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="static/css/styles.css" />
+    <link rel="stylesheet" href="static/css/report.css" />
+</head>
+<body>
+    <div class="page-wrapper report-page">
+
+        <!-- ===== Decorative abstract shapes (reused from landing) ===== -->
+        <div class="shape shape-orange-blob"></div>
+        <div class="shape shape-navy-dot"></div>
+        <div class="shape shape-lavender-blob"></div>
+        <div class="shape shape-lavender-blob-desktop d-none d-lg-block"></div>
+        <div class="shape shape-orange-ring-desktop d-none d-lg-block"></div>
+        <div class="shape shape-navy-dot-desktop d-none d-lg-block"></div>
+
+        <!-- ===== Logo (top-left) ===== -->
+        <a href="index.html" class="brand-header">
+            <img src="static/images/head.png" alt="Finzy" class="brand-logo">
+            <span class="brand-name">Finzy</span>
+        </a>
+
+        <!-- ===== Language switcher (top-right) ===== -->
+        <div class="lang-switch">
+            <button type="button" data-lang="id">ID</button>
+            <button type="button" data-lang="en">EN</button>
+        </div>
+
+        <!-- ===== Wizard ===== -->
+        <main class="wizard-main">
+            <img src="static/images/body-tilt.png" alt="" class="wizard-side-fox">
+            <div class="wizard-card">
+
+                <!-- Step indicator + reset -->
+                <div class="wizard-header-bar">
+                    <div class="step-indicator" id="stepIndicator">
+                        <div class="step-dot is-active" data-dot="1">
+                            <span class="step-dot-num">1</span>
+                            <span class="step-dot-label" data-translate="step1_label">Info Laporan</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step-dot" data-dot="2">
+                            <span class="step-dot-num">2</span>
+                            <span class="step-dot-label" data-translate="step2_label">Transaksi</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step-dot" data-dot="3">
+                            <span class="step-dot-num">3</span>
+                            <span class="step-dot-label" data-translate="step3_label">Ringkasan</span>
+                        </div>
+                    </div>
+
+                    <button type="button" id="resetBtn" class="btn-reset" title="Reset">
+                        <i class="fa fa-rotate-left"></i>
+                        <span data-translate="reset_btn">Reset</span>
+                    </button>
+                </div>
+
+                <!-- ============ STEP 1 — Info Laporan ============ -->
+                <section class="wizard-step is-active" data-step="1">
+                    <h2 class="step-title" data-translate="step1_title">Buat laporan baru</h2>
+                    <p class="step-subtitle" data-translate="step1_subtitle">Isi dulu data dasar laporan keuangan kamu.</p>
+
+                    <div class="form-group">
+                        <label for="judulLaporan" data-translate="label_judul">Judul Laporan</label>
+                        <input type="text" id="judulLaporan" class="form-control"
+                               data-translate-placeholder="placeholder_judul" placeholder="Contoh: Laporan Kas Bulan Januari">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tanggalLaporan" data-translate="label_tanggal_laporan">Tanggal Laporan</label>
+                        <input type="date" id="tanggalLaporan" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="saldoAwal" data-translate="label_saldo_awal">Saldo Awal</label>
+                        <div class="currency-field">
+                            <span class="currency-prefix">Rp</span>
+                            <input type="text" inputmode="numeric" id="saldoAwal" class="form-control currency-input" placeholder="0">
+                        </div>
+                    </div>
+
+                    <div class="wizard-actions wizard-actions-end">
+                        <button type="button" class="btn-next" data-goto="2">
+                            <span data-translate="btn_next">Next</span>
+                            <img src="static/images/head-side.png" alt="" class="btn-icon">
+                        </button>
+                    </div>
+                </section>
+
+                <!-- ============ STEP 2 — Transaksi ============ -->
+                <section class="wizard-step" data-step="2">
+                    <h2 class="step-title" data-translate="step2_title">Catat transaksi</h2>
+                    <p class="step-subtitle" data-translate="step2_subtitle">Tambahkan setiap uang masuk dan uang keluar.</p>
+
+                    <div class="transaction-form">
+                        <div class="form-group">
+                            <label for="txTanggal" data-translate="label_tanggal">Tanggal</label>
+                            <input type="date" id="txTanggal" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="txKeterangan" data-translate="label_untuk_apa">Untuk Apa</label>
+                            <input type="text" id="txKeterangan" class="form-control"
+                                   data-translate-placeholder="placeholder_untuk_apa" placeholder="Contoh: Bayar listrik">
+                        </div>
+
+                        <div class="form-row-split">
+                            <div class="form-group">
+                                <label data-translate="label_jenis">Jenis</label>
+
+                                <!-- Custom dropdown: fully in our control (opens right
+                                     below the trigger, never as a full-screen native
+                                     picker) and visibly "clickable" via the chevron. -->
+                                <div class="custom-select" id="jenisSelect">
+                                    <button type="button" class="custom-select-trigger" id="jenisTrigger" aria-haspopup="listbox" aria-expanded="false">
+                                        <span id="jenisValueLabel" data-translate="option_masuk">Uang Masuk</span>
+                                        <i class="fa fa-chevron-down custom-select-chevron"></i>
+                                    </button>
+                                    <div class="custom-select-options" id="jenisOptions" role="listbox" hidden>
+                                        <div class="custom-select-option is-selected" data-value="masuk" data-translate="option_masuk" role="option">Uang Masuk</div>
+                                        <div class="custom-select-option" data-value="keluar" data-translate="option_keluar" role="option">Uang Keluar</div>
+                                    </div>
+                                    <input type="hidden" id="txJenis" value="masuk">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txJumlah" data-translate="label_jumlah">Jumlah</label>
+                                <div class="currency-field">
+                                    <span class="currency-prefix">Rp</span>
+                                    <input type="text" inputmode="numeric" id="txJumlah" class="form-control currency-input" placeholder="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" id="addTransaksiBtn" class="btn-add-tx">
+                            <i class="fa fa-plus"></i> <span data-translate="btn_tambah_transaksi">Tambah Transaksi</span>
+                        </button>
+                    </div>
+
+                    <div class="transaction-list-wrap">
+                        <table class="transaction-table transaction-table-desktop">
+                            <thead>
+                                <tr>
+                                    <th data-translate="th_tanggal">Tanggal</th>
+                                    <th data-translate="th_keterangan">Keterangan</th>
+                                    <th data-translate="th_jenis">Jenis</th>
+                                    <th class="text-end" data-translate="th_jumlah">Jumlah</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="transaksiTableBody"></tbody>
+                        </table>
+                        <div class="tx-card-list" id="transaksiCardList"></div>
+                        <p class="empty-state" id="emptyTransaksi" data-translate="empty_transaksi">Belum ada transaksi. Tambahkan transaksi pertama kamu di atas.</p>
+                    </div>
+
+                    <div class="wizard-actions">
+                        <button type="button" class="btn-back" data-goto="1">
+                            <img src="static/images/head-side.png" alt="" class="btn-icon btn-icon-flip">
+                            <span data-translate="btn_back">Back</span>
+                        </button>
+                        <button type="button" class="btn-next" data-goto="3">
+                            <span data-translate="btn_next">Next</span>
+                            <img src="static/images/head-side.png" alt="" class="btn-icon">
+                        </button>
+                    </div>
+                </section>
+
+                <!-- ============ STEP 3 — Ringkasan ============ -->
+                <section class="wizard-step" data-step="3">
+                    <div class="summary-header">
+                        <img src="static/images/head-smile.png" alt="" class="summary-fox">
+                        <div>
+                            <h2 class="step-title" data-translate="step3_title">Ringkasan laporan</h2>
+                            <p class="step-subtitle" data-translate="step3_subtitle">Cek lagi datanya sebelum laporan dibuat.</p>
+                        </div>
+                    </div>
+
+                    <div class="summary-info">
+                        <div class="summary-row"><span data-translate="label_judul">Judul Laporan</span><strong id="sumJudul">—</strong></div>
+                        <div class="summary-row"><span data-translate="label_tanggal_laporan">Tanggal Laporan</span><strong id="sumTanggal">—</strong></div>
+                    </div>
+
+                    <div class="transaction-list-wrap">
+                        <table class="transaction-table transaction-table-desktop">
+                            <thead>
+                                <tr>
+                                    <th data-translate="th_tanggal">Tanggal</th>
+                                    <th data-translate="th_keterangan">Keterangan</th>
+                                    <th class="text-end" data-translate="th_uang_masuk">Uang Masuk</th>
+                                    <th class="text-end" data-translate="th_uang_keluar">Uang Keluar</th>
+                                    <th class="text-end" data-translate="th_saldo">Saldo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="summaryTableBody"></tbody>
+                        </table>
+                        <div class="tx-card-list" id="summaryCardList"></div>
+                    </div>
+
+                    <div class="summary-totals">
+                        <div class="summary-row"><span data-translate="label_total_masuk">Total Uang Masuk</span><strong class="text-in" id="sumMasuk">Rp 0</strong></div>
+                        <div class="summary-row"><span data-translate="label_total_keluar">Total Uang Keluar</span><strong class="text-out" id="sumKeluar">Rp 0</strong></div>
+                        <div class="summary-row summary-final"><span data-translate="label_saldo_akhir">Saldo Akhir</span><strong id="sumAkhir">Rp 0</strong></div>
+                    </div>
+
+                    <div class="wizard-actions">
+                        <button type="button" class="btn-back" data-goto="2">
+                            <img src="static/images/head-side.png" alt="" class="btn-icon btn-icon-flip">
+                            <span data-translate="btn_back">Back</span>
+                        </button>
+                        <button type="button" class="btn-generate" id="generatePdfBtn">
+                            <i class="fa fa-file-pdf-o"></i> <span data-translate="btn_buat_laporan">Buat Laporan</span>
+                        </button>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+    </div>
+
+    <!-- jsPDF (client-side PDF generation, no backend needed) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="static/js/translate.js"></script>
+    <script src="static/js/report.js"></script>
+</body>
+</html>
